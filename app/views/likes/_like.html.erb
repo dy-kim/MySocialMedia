@@ -1,0 +1,10 @@
+<% if current_user.nil? %>
+  <%= button_to "'좋아요'를 하려면 로그인", article_likes_path(article), method: :post %>
+<% elsif article.likes.find_by(user_id: current_user.id, article_id: article.id).nil? %>
+  <%= button_to "좋아요", article_likes_path(article), method: :post %>
+<% else %>
+  <%= button_to "좋아요 취소",
+  article_like_path(article),
+  method: :delete,
+  data: { confirm: '"좋아요"를 취소하시겠습니까?' } %>
+<% end %>

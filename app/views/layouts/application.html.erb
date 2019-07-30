@@ -7,9 +7,43 @@
 
     <%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track': 'reload' %>
     <%= javascript_include_tag 'application', 'data-turbolinks-track': 'reload' %>
+
+    <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
   </head>
 
   <body>
+    <div>
+      <% if user_signed_in? %>
+        <%= link_to "회원정보", edit_user_registration_path %>
+        <%= link_to "로그아웃", destroy_user_session_path, method: :delete %>
+      <% else %>
+        <%= link_to "로그인", user_session_path %>
+        <%= link_to "회원가입", new_user_registration_path %>
+      <% end %>
+    </div>
+
+    <br>
+    <hr>
+
+    <h2 style="font-weight: bold">로그인 정보</h2>
+    <% if notice %>
+      <p class="alert alert-success" id="notice"><%= notice %></p>
+    <% end %>
+    <% if alert %>
+      <p class="alert alert-danger" id="alert"><%= alert %></p>
+    <% end %>
+
+    <% if user_signed_in? %>
+      <div>
+        아이디 : <%= current_user.email %><br/>
+        유저 No. : <%= current_user.id %>
+      </div>
+    <% else %>
+        로그인 되어있지 않음.
+    <% end %>
+
+    <hr>
+
     <%= yield %>
   </body>
 </html>

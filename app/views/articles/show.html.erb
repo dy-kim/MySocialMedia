@@ -1,5 +1,3 @@
-<p id="notice"><%= notice %></p>
-
 <p>
   <strong>Title:</strong>
   <%= @article.title %>
@@ -7,18 +5,35 @@
 
 <p>
   <strong>Content:</strong>
-  <%= @article.content %>
+  <%= @article.content.html_safe %>
 </p>
 
 <hr>
 
+<h2>Likes</h2>
+<div class="like-ajax">
+  <p>
+    <strong id="like-counter">
+      <%= render 'likes/like_counter', num_likes: @article.likes.size %>
+    </strong>
+  </p>
+  <%= render 'likes/like', article: @article %>
+</div>
+
+<hr>
+
 <h2>Comments</h2>
-<%= render @article.comments %>
+
+<div id="show-comment-ajax">
+  <%= render @article.comments %>
+</div>
 
 <hr>
 
 <h2>Add Comments</h3>
-<%= render 'comments/form' %>
+<div id="add-comment-ajax">
+  <%= render 'comments/form' %>
+</div>
 
 <hr>
 

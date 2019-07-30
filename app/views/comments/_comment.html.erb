@@ -1,15 +1,18 @@
-<p>
-  <strong>Commenter:</strong>
-  <%= comment.commenter %>
-</p>
+<div id=<%= "comment-id-#{comment.id}" %>>
+  <p>
+    <strong>Commenter:</strong>
+    <%= comment.commenter %>
+  </p>
 
-<p>
-  <strong>Body:</strong>
-  <%= comment.body %>
-</p>
+  <p>
+    <strong>Body:</strong>
+    <%= comment.body %>
+  </p>
 
-<div>
-  <%= link_to "Delete Comments", [comment.article, comment],
-  method: :delete,
-  data: { confirm: 'Are you sure?' } %>
+  <div>
+    <%= link_to "Delete Comments", [comment.article, comment],
+    method: :delete,
+    remote: true,
+    data: { confirm: 'Are you sure?' } %>
+  </div>
 </div>
