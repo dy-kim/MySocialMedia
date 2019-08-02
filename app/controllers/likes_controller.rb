@@ -1,11 +1,12 @@
 # frozen_string_literal: true
 
 class LikesController < ApplicationController
-  before_action :find_article
+  before_action :find_article, :find_like, :authenticate_user!
 
   def create
-    @likes = @article.likes
-    @like = @likes.create(user_id: current_user.id) if user_signed_in?
+    if @like.nil?
+      @like = @article.likes.create(user_id: current_user.id)
+    end
 
     respond_to do |format|
       format.html { redirect_to article_path(@article) }
@@ -14,20 +15,25 @@ class LikesController < ApplicationController
   end
 
   def destroy
-    like_to_destroy = @article.likes.find_by(user_id: current_user.id)
-
-    if like_to_destroy.nil?
-      flash[:notice] = "Cannot unlike"
+    if @like.nil?
+      flash[:notice] = 'Cannot unlike!'
     else
-      like_to_destroy.destroy
+      @like.destroy
     end
 
-    redirect_to article_path(@article)
+    respond_to do |format|
+      format.html { redirect_to article_path(@article) }
+      format.js
+    end
   end
 
   private
 
   def find_article
     @article = Article.find(params[:article_id])
+  end
+
+  def find_like
+    @like = @article.likes.find_by(user_id: current_user.id)
   end
 end

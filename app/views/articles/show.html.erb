@@ -11,12 +11,7 @@
 <hr>
 
 <h2>Likes</h2>
-<div class="like-ajax">
-  <p>
-    <strong id="like-counter">
-      <%= render 'likes/like_counter', num_likes: @article.likes.size %>
-    </strong>
-  </p>
+<div id="like-ajax">
   <%= render 'likes/like', article: @article %>
 </div>
 

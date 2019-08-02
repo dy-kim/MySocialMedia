@@ -1,10 +1,22 @@
-<% if current_user.nil? %>
-  <%= button_to "'좋아요'를 하려면 로그인", article_likes_path(article), method: :post %>
-<% elsif article.likes.find_by(user_id: current_user.id, article_id: article.id).nil? %>
-  <%= button_to "좋아요", article_likes_path(article), method: :post %>
+<% likes = article.likes %>
+<% like_by_user = likes.find_by(user_id: current_user.id, article_id: article.id) if user_signed_in? %>
+
+<p>
+  <strong id="like-counter">
+    <%= render 'likes/like_counter', num_likes: likes.size %>
+  </strong>
+</p>
+
+<% if not user_signed_in? %>
+  <%= button_to "'좋아요'를 하려면 로그인", user_session_path %>
+<% elsif like_by_user.nil? %>
+  <%= button_to "좋아요", article_likes_path(article),
+  method: :post,
+  remote: true %>
 <% else %>
   <%= button_to "좋아요 취소",
-  article_like_path(article),
+  article_like_path(article, like_by_user.id),
   method: :delete,
+  remote:true,
   data: { confirm: '"좋아요"를 취소하시겠습니까?' } %>
 <% end %>
