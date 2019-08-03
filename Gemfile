@@ -31,6 +31,10 @@ gem 'bcrypt', '~> 3.1.7'
 
 gem 'devise'
 
+gem 'omniauth-oauth2'
+gem 'omniauth-google-oauth2'
+gem 'figaro'
+
 # Use ActiveStorage variant
 # gem 'mini_magick', '~> 4.8'
 
